@@ -1,0 +1,125 @@
+﻿<Window x:Class="WPFChallenge.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFChallenge"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock>
+                    <Run Text="Center Pot Chips"/>
+                    <Run Text="{Binding CenterPot.Chips, Mode=OneWay}"/>       
+                </TextBlock>
+                <TextBlock Grid.Row="1">
+                    <Run Text="Non zero Players"/>
+                    <Run Text="{Binding NonZeroPlayers, Mode=OneWay}"/>       
+                </TextBlock>
+            </Grid>
+            <ListBox ItemsSource="{Binding Players}" Grid.Row="1">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock>
+                                <Run Text="ID"/>
+                                <Run Text="{Binding Id, Mode=OneWay}"/>
+                            </TextBlock>
+                            <TextBlock Grid.Row="1">
+                                <Run Text="Chips Left"/>
+                                <Run Text="{Binding SelfPot.Chips, Mode=OneWay}"/>
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Game Statistics" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <ListBox Grid.Row="1" ItemsSource="{Binding Stats}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock>
+                                <Run Text="Iterations"/>
+                                <Run  Text="{Binding Iterations, Mode=OneWay}"/>
+                            </TextBlock>
+                            <TextBlock Grid.Row="1">
+                                <Run Text="Duration"/>
+                                <Run Text="{Binding Duration, Mode=OneWay}"/>
+                            </TextBlock>
+                            <TextBlock Grid.Row="2">
+                                <Run Text="Winner"/>
+                                <Run Text="{Binding Winner, Mode=OneWay}"/>
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock>
+                    <Run Text="Fastest time"/>
+                    <Run Text="{Binding FastestGame}"/>
+                    <Run Text="(ms)"/>
+                </TextBlock>
+                <TextBlock Grid.Row="1">
+                    <Run Text="Average time"/>
+                    <Run Text="{Binding AverageGame}"/>
+                    <Run Text="(ms)"/>
+                </TextBlock>
+            </Grid>
+            
+            <Grid Grid.Row="3" IsEnabled="{Binding GameRunning, Converter={local:InverseBooleanConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Players" Grid.Column="0" Grid.Row="0" Margin="3"/>
+                <TextBox Text="{Binding PlayerCount, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0" Margin="3"/>
+
+                <Button Content="Start" Command="{Binding StartCommand}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Margin="3"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
